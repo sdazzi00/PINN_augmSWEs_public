@@ -1,0 +1,60 @@
+defaults :
+  - modulus_default
+  - arch:
+      - fully_connected
+  - scheduler: tf_exponential_lr
+  - optimizer: adam
+  - loss: sum
+  - _self_
+
+network_dir: .
+save_filetypes : "vtk,npz"
+run_mode: train
+
+arch:
+  fully_connected:
+    arch_type: fully_connected
+    layer_size: 512
+    nr_layers: 6    
+    activation_fn: silu
+    
+optimizer:
+  lr: 0.001
+  eps: 1.0e-08
+  weight_decay: 0.0
+ 
+scheduler:
+  decay_rate: 0.95
+  decay_steps: 100
+
+training:
+  rec_results_freq: 1000
+  max_steps : 10000
+
+stop_criterion:
+  metric: null
+  min_delta: null
+  patience: 1000
+  mode: min
+  freq: 1000
+  strict: false
+ 
+batch_size:
+  IC: 32
+  BC: 32
+  interior: 256
+
+custom:
+  weights:
+    ic: 1
+    bc_coef1: 0
+    bc_coef2: 1
+    mass_coef1: 0
+    mass_coef2: 1
+    mom_coef1: 0
+    mom_coef2: 1
+    dep_pos: 0
+    uh_zero: 0
+  sampling:
+    par1: 0
+    par2: 1
